@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Eniyavan — DevOps Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #F8F9FB;
+    --surface: #FFFFFF;
+    --border: #E8EAF0;
+    --border-dark: #D0D4DE;
+    --text-primary: #111827;
+    --text-secondary: #5C6476;
+    --text-muted: #9CA3B0;
+    --accent: #2563EB;
+    --accent-light: #EFF4FF;
+    --accent-dim: #BFCFFF;
+    --mono-bg: #F1F3F8;
+    --green: #059669;
+    --green-bg: #ECFDF5;
+    --amber: #D97706;
+    --amber-bg: #FFFBEB;
+    --tag-bg: #F0F2F8;
+    --tag-text: #3B4466;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-primary); font-size: 15px; line-height: 1.6; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(248,249,251,0.92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.3px;
+  }
+  .nav-logo span { color: var(--text-muted); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: var(--text-secondary); font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta {
+    font-size: 13px; font-weight: 500;
+    background: var(--accent); color: #fff;
+    padding: 7px 16px; border-radius: var(--radius-sm);
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 80px 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  /* SECTION LABEL */
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title { font-size: 26px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.4px; }
+  .section-subtitle { font-size: 15px; color: var(--text-secondary); max-width: 560px; }
+
+  /* HERO */
+  #hero { padding: 100px 0 80px; }
+  .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-muted);
+    margin-bottom: 16px; letter-spacing: 0.04em;
+  }
+  .hero-name { font-size: 48px; font-weight: 600; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 8px; }
+  .hero-role {
+    font-size: 20px; font-weight: 400; color: var(--accent);
+    margin-bottom: 20px; letter-spacing: -0.3px;
+  }
+  .hero-bio { font-size: 15px; color: var(--text-secondary); max-width: 500px; line-height: 1.7; margin-bottom: 28px; }
+  .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    font-size: 13px; font-weight: 500;
+    background: var(--accent); color: #fff;
+    padding: 10px 20px; border-radius: var(--radius-sm);
+    transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    font-size: 13px; font-weight: 500;
+    background: var(--surface); color: var(--text-primary);
+    padding: 10px 20px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-dark);
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-avatar {
+    width: 140px; height: 140px; border-radius: 50%;
+    background: var(--accent-light);
+    border: 3px solid var(--accent-dim);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; font-weight: 600; color: var(--accent);
+    flex-shrink: 0;
+  }
+  .status-dot {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--green); font-weight: 500;
+    background: var(--green-bg); padding: 4px 10px; border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .status-dot::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); display: block; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 40px; }
+  .skill-category {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .skill-category:hover { border-color: var(--accent-dim); box-shadow: var(--shadow-md); }
+  .skill-cat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag {
+    font-size: 12px; font-weight: 500;
+    background: var(--tag-bg); color: var(--tag-text);
+    padding: 4px 10px; border-radius: 4px;
+  }
+
+  /* PROJECTS */
+  .projects-list { display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .project-card:hover { box-shadow: var(--shadow-md); border-color: var(--border-dark); }
+  .project-header { padding: 24px 28px 20px; border-bottom: 1px solid var(--border); }
+  .project-meta { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+  .project-title { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 6px; }
+  .project-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+  .project-status {
+    font-size: 11px; font-weight: 500; white-space: nowrap;
+    padding: 4px 10px; border-radius: 20px; flex-shrink: 0;
+  }
+  .status-live { background: var(--green-bg); color: var(--green); }
+  .status-wip { background: var(--amber-bg); color: var(--amber); }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .project-tag {
+    font-size: 11px; font-weight: 500;
+    background: var(--accent-light); color: var(--accent);
+    padding: 3px 9px; border-radius: 4px;
+  }
+  .project-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .project-arch { padding: 24px 28px; border-right: 1px solid var(--border); }
+  .project-video { padding: 24px 28px; }
+  .sub-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .arch-diagram {
+    background: var(--mono-bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text-secondary);
+    line-height: 1.9; overflow-x: auto;
+    white-space: pre;
+  }
+  .video-frame {
+    background: var(--mono-bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    aspect-ratio: 16/9; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px;
+    color: var(--text-muted); font-size: 13px;
+  }
+  .video-frame iframe { width: 100%; height: 100%; border: none; }
+  .video-placeholder-icon { font-size: 32px; }
+  .video-placeholder-text { font-size: 13px; color: var(--text-muted); text-align: center; line-height: 1.5; }
+  .project-footer { padding: 16px 28px; border-top: 1px solid var(--border); display: flex; gap: 12px; }
+  .link-btn {
+    font-size: 12px; font-weight: 500; color: var(--text-secondary);
+    display: inline-flex; align-items: center; gap: 5px;
+    transition: color 0.2s;
+  }
+  .link-btn:hover { color: var(--accent); }
+  .link-btn svg { width: 14px; height: 14px; }
+
+  /* CERTS */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+  .cert-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px;
+    display: flex; gap: 16px; align-items: flex-start;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .cert-card:hover { border-color: var(--accent-dim); box-shadow: var(--shadow-md); }
+  .cert-icon {
+    width: 44px; height: 44px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .cert-icon-aws { background: #FFF7ED; }
+  .cert-icon-tns { background: var(--accent-light); }
+  .cert-info { flex: 1; }
+  .cert-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .cert-issuer { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .cert-badge {
+    font-size: 11px; font-weight: 500;
+    background: var(--green-bg); color: var(--green);
+    padding: 3px 8px; border-radius: 4px; display: inline-block;
+  }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+  .contact-text p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+  .contact-links { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px 18px;
+    font-size: 14px; font-weight: 500; color: var(--text-primary);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link-icon { font-size: 18px; width: 22px; text-align: center; }
+  .contact-form-note {
+    background: var(--accent-light); border: 1px solid var(--accent-dim);
+    border-radius: var(--radius); padding: 24px;
+  }
+  .contact-form-note p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-top: 8px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .footer-logo { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-muted); }
+
+  /* MOBILE */
+  @media (max-width: 720px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-avatar { display: none; }
+    .hero-name { font-size: 36px; }
+    .project-body { grid-template-columns: 1fr; }
+    .project-arch { border-right: none; border-bottom: 1px solid var(--border); }
+    .contact-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    section { padding: 56px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">eniyavan<span>.dev</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#certifications">Certs</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#resume" class="nav-cta">Resume ↓</a>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="status-dot">Open to DevOps roles</div>
+        <div class="hero-eyebrow">// based in Chennai, India</div>
+        <h1 class="hero-name">Eniyavan</h1>
+        <div class="hero-role">DevOps Engineer</div>
+        <p class="hero-bio">
+          Building production-grade DevOps pipelines and cloud infrastructure on AWS.
+          Passionate about automating everything — from CI/CD to infrastructure provisioning —
+          and making systems observable, scalable, and resilient.
+        </p>
+        <div class="hero-links">
+          <a href="#projects" class="btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            View Projects
+          </a>
+          <a href="https://github.com/" target="_blank" class="btn-outline">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.1.82-.26.82-.58v-2c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.34-1.75-1.34-1.75-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.8 1.3 3.48.99.1-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="https://linkedin.com/in/" target="_blank" class="btn-outline">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+      <div class="hero-avatar">E</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-eyebrow">// tools & stack</div>
+    <h2 class="section-title">Skills</h2>
+    <p class="section-subtitle">Technologies I work with across the full DevOps lifecycle — from code to cloud.</p>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <div class="skill-cat-label">CI/CD</div>
+        <div class="skill-tags">
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">AWS ECR</span>
+          <span class="skill-tag">AWS ECS Fargate</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Kubernetes</div>
+        <div class="skill-tags">
+          <span class="skill-tag">EKS</span>
+          <span class="skill-tag">Helm</span>
+          <span class="skill-tag">ArgoCD</span>
+          <span class="skill-tag">Argo Rollouts</span>
+          <span class="skill-tag">HPA</span>
+          <span class="skill-tag">Nginx Ingress</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Infrastructure as Code</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Terraform</span>
+          <span class="skill-tag">Ansible</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Observability</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Prometheus</span>
+          <span class="skill-tag">Grafana</span>
+          <span class="skill-tag">Loki</span>
+          <span class="skill-tag">Alertmanager</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Security (DevSecOps)</div>
+        <div class="skill-tags">
+          <span class="skill-tag">SAST</span>
+          <span class="skill-tag">DAST</span>
+          <span class="skill-tag">Container Scanning</span>
+          <span class="skill-tag">SBOM</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Cloud & Automation</div>
+        <div class="skill-tags">
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">Python (boto3)</span>
+          <span class="skill-tag">Lambda</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">Bash</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-eyebrow">// what i've built</div>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-subtitle">End-to-end DevOps projects — each with architecture, source code, and a walkthrough demo.</p>
+
+    <div class="projects-list">
+
+      <!-- PROJECT 1 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div>
+              <div class="project-title">CI/CD Pipeline — Dockerized App on AWS ECS Fargate</div>
+              <div class="project-desc">Automated end-to-end pipeline using GitHub Actions to build, scan, push to ECR, and deploy a containerized Node.js app to ECS Fargate. Includes SAST scanning and rollback on failure.</div>
+            </div>
+            <span class="project-status status-wip">In Progress</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">GitHub Actions</span>
+            <span class="project-tag">Docker</span>
+            <span class="project-tag">AWS ECR</span>
+            <span class="project-tag">ECS Fargate</span>
+            <span class="project-tag">SAST</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-arch">
+            <div class="sub-label">Architecture</div>
+            <div class="arch-diagram">GitHub Push
+    │
+    ▼
+GitHub Actions
+  ├─ Lint + Test
+  ├─ SAST Scan (Trivy)
+  ├─ Docker Build
+  ├─ Push → AWS ECR
+  └─ Deploy → ECS Fargate
+         │
+         ▼
+    ALB (Load Balancer)
+         │
+         ▼
+    ECS Tasks (containers)</div>
+          </div>
+          <div class="project-video">
+            <div class="sub-label">Demo video</div>
+            <div class="video-frame">
+              <!-- REPLACE: paste your YouTube embed URL below -->
+              <!-- <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+              <div class="video-placeholder-icon">▶</div>
+              <div class="video-placeholder-text">Demo coming soon<br/><span style="font-size:11px">Upload to YouTube → paste embed URL here</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/" target="_blank" class="link-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.1.82-.26.82-.58v-2c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.34-1.75-1.34-1.75-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.8 1.3 3.48.99.1-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div>
+              <div class="project-title">GitOps with ArgoCD — Canary Deployments on EKS</div>
+              <div class="project-desc">GitOps workflow using ArgoCD to sync Kubernetes manifests from GitHub. Canary deployments managed via Argo Rollouts with automated traffic shifting and rollback on metric breach.</div>
+            </div>
+            <span class="project-status status-wip">In Progress</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">ArgoCD</span>
+            <span class="project-tag">EKS</span>
+            <span class="project-tag">Helm</span>
+            <span class="project-tag">Argo Rollouts</span>
+            <span class="project-tag">GitOps</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-arch">
+            <div class="sub-label">Architecture</div>
+            <div class="arch-diagram">Git Repo (manifests)
+    │
+    ▼
+  ArgoCD (sync)
+    │
+    ▼
+  EKS Cluster
+  ├─ Argo Rollouts
+  │    ├─ 10% canary
+  │    ├─ 50% canary
+  │    └─ 100% stable
+  ├─ Nginx Ingress
+  └─ Prometheus metrics
+       └─ auto-rollback</div>
+          </div>
+          <div class="project-video">
+            <div class="sub-label">Demo video</div>
+            <div class="video-frame">
+              <!-- REPLACE: paste your YouTube embed URL below -->
+              <div class="video-placeholder-icon">▶</div>
+              <div class="video-placeholder-text">Demo coming soon<br/><span style="font-size:11px">Upload to YouTube → paste embed URL here</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/" target="_blank" class="link-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.1.82-.26.82-.58v-2c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.34-1.75-1.34-1.75-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.8 1.3 3.48.99.1-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- PROJECT 3 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div>
+              <div class="project-title">Observability Stack — Prometheus, Grafana & Loki on Kubernetes</div>
+              <div class="project-desc">Full monitoring and logging setup on EKS. Prometheus scrapes cluster metrics, Grafana dashboards visualize them, Loki aggregates logs. Alertmanager fires PagerDuty/Slack alerts on breach.</div>
+            </div>
+            <span class="project-status status-wip">In Progress</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Prometheus</span>
+            <span class="project-tag">Grafana</span>
+            <span class="project-tag">Loki</span>
+            <span class="project-tag">Alertmanager</span>
+            <span class="project-tag">EKS</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-arch">
+            <div class="sub-label">Architecture</div>
+            <div class="arch-diagram">EKS Workloads
+    │
+    ├─ Prometheus (scrape metrics)
+    │       └─ Alertmanager
+    │               └─ Slack / PagerDuty
+    │
+    ├─ Loki (log aggregation)
+    │       └─ Promtail (log shipping)
+    │
+    └─ Grafana
+            ├─ Metrics dashboards
+            └─ Log explorer (Loki)</div>
+          </div>
+          <div class="project-video">
+            <div class="sub-label">Demo video</div>
+            <div class="video-frame">
+              <div class="video-placeholder-icon">▶</div>
+              <div class="video-placeholder-text">Demo coming soon<br/><span style="font-size:11px">Upload to YouTube → paste embed URL here</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/" target="_blank" class="link-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.1.82-.26.82-.58v-2c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.34-1.75-1.34-1.75-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.8 1.3 3.48.99.1-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- PROJECT 4 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div>
+              <div class="project-title">DevSecOps Pipeline — SAST, DAST & Container Security</div>
+              <div class="project-desc">Security-first CI/CD pipeline with automated static analysis, dependency scanning, container image scanning (Trivy), DAST with OWASP ZAP, and SBOM generation. Fails pipeline on critical CVEs.</div>
+            </div>
+            <span class="project-status status-wip">In Progress</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">GitHub Actions</span>
+            <span class="project-tag">Trivy</span>
+            <span class="project-tag">OWASP ZAP</span>
+            <span class="project-tag">SBOM</span>
+            <span class="project-tag">DevSecOps</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-arch">
+            <div class="sub-label">Architecture</div>
+            <div class="arch-diagram">Code Push
+    │
+    ▼
+GitHub Actions
+  ├─ SAST (Semgrep)
+  ├─ Dependency Scan (Snyk)
+  ├─ Docker Build
+  ├─ Image Scan (Trivy)
+  │     └─ Block on critical CVEs
+  ├─ SBOM Generation (Syft)
+  ├─ Deploy to Staging
+  └─ DAST (OWASP ZAP)
+        └─ Report to GitHub Security</div>
+          </div>
+          <div class="project-video">
+            <div class="sub-label">Demo video</div>
+            <div class="video-frame">
+              <div class="video-placeholder-icon">▶</div>
+              <div class="video-placeholder-text">Demo coming soon<br/><span style="font-size:11px">Upload to YouTube → paste embed URL here</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/" target="_blank" class="link-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.1.82-.26.82-.58v-2c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.34-1.75-1.34-1.75-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.8 1.3 3.48.99.1-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-eyebrow">// credentials</div>
+    <h2 class="section-title">Certifications</h2>
+    <p class="section-subtitle">Verified cloud and DevOps certifications.</p>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon cert-icon-aws">☁️</div>
+        <div class="cert-info">
+          <div class="cert-name">AWS Certified Cloud Practitioner</div>
+          <div class="cert-issuer">Amazon Web Services (AWS)</div>
+          <span class="cert-badge">✓ Verified</span>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon cert-icon-tns">🏅</div>
+        <div class="cert-info">
+          <div class="cert-name">TNSkills Level-3 Cloud Domain</div>
+          <div class="cert-issuer">Tamil Nadu Skill Development Corporation</div>
+          <span class="cert-badge">✓ Verified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="container">
+    <div class="section-eyebrow">// download</div>
+    <h2 class="section-title">Resume</h2>
+    <p class="section-subtitle">My latest resume — updated with all projects, certifications, and skills.</p>
+    <div style="margin-top: 28px;">
+      <a href="resume.pdf" download class="btn-primary" style="display:inline-flex; gap:8px; align-items:center; font-size:14px; padding:12px 24px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume (PDF)
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-eyebrow">// get in touch</div>
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+      <div class="contact-text">
+        <p>I'm actively looking for DevOps Engineer / Platform Engineer / Cloud Engineer roles. If you're hiring or want to collaborate on an open-source DevOps project, reach out.</p>
+        <div class="contact-links">
+          <a href="mailto:your@email.com" class="contact-link">
+            <span class="contact-link-icon">✉</span>
+            your@email.com
+          </a>
+          <a href="https://linkedin.com/in/" target="_blank" class="contact-link">
+            <span class="contact-link-icon">in</span>
+            linkedin.com/in/eniyavan
+          </a>
+          <a href="https://github.com/" target="_blank" class="contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.1.82-.26.82-.58v-2c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.34-1.75-1.34-1.75-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.8 1.3 3.48.99.1-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            github.com/eniyavan
+          </a>
+        </div>
+      </div>
+      <div class="contact-form-note">
+        <div style="font-size:14px; font-weight:600; color:var(--accent);">Open to work</div>
+        <p>Actively looking for <strong>DevOps Engineer</strong>, <strong>Platform Engineer</strong>, and <strong>Cloud Engineer</strong> roles — remote or based in Chennai / India. Available for interviews immediately.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">eniyavan.dev</div>
+  <div>Built with HTML · Hosted on GitHub Pages</div>
+</footer>
+
+</body>
+</html>
